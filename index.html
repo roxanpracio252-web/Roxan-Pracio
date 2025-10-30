@@ -3,175 +3,340 @@
 <head>
   <meta charset="UTF-8">
   <title>Pracio Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #D8BFD8;
-      margin: 0;
-      padding: 10px;
+    /* ======== COLOR PALETTE ======== */
+    :root {
+      --main: #4B0082;
+      --light-bg: #f3e6ff;
+      --accent: #E6CCFF;
+      --dark: #2b004b;
+      --white: #ffffff;
+      --highlight: #ffffff;
+      --glow: rgba(75, 0, 130, 0.3);
     }
 
-    h1, h2 {
+    /* ======== GLOBAL STYLES ======== */
+    body {
+      font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+      background-color: #D8BFD8;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+      color: var(--dark);
+    }
+
+    h1 {
+      margin-top: 25px;
+      font-size: 2.7rem;
       text-align: center;
-      color: #4B0082;
+      color: var(--main);
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
     }
 
     hr {
-      border: 10px solid #4B0082;
+      border: 1.5px solid var(--main);
       width: 80%;
-      margin: auto;
-    }
-
-    .section {
-      background-color: #f5e6ff;
-      border: 2px solid #4B0082;
+      margin: 20px auto;
       border-radius: 10px;
-      padding: 20px;
-      margin: 30px auto;
-      width: 90%;
-      box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
     }
 
-    table {
-      width: 100%;
+    /* ======== NAVIGATION ======== */
+    nav {
+      background-color: var(--main);
+      padding: 15px 0;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    }
+
+    nav a {
+      text-decoration: none;
+    }
+
+    .nav-box {
+      display: inline-block;
+      color: var(--white);
+      background-color: rgba(255,255,255,0.15);
+      padding: 10px 18px;
+      margin: 8px;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .nav-box:hover {
+      background-color: var(--accent);
+      color: var(--main);
+      transform: scale(1.1);
+      border: 2px solid var(--white);
+    }
+
+    .nav-box.active {
+      background-color: var(--white);
+      color: var(--main);
+      box-shadow: 0 0 15px var(--glow);
+      border: 2px solid var(--main);
+      transform: scale(1.1);
+    }
+
+    /* ======== SECTION CONTAINER ======== */
+    .section {
+      background-color: var(--light-bg);
+      border: 2px solid var(--main);
+      border-radius: 20px;
+      padding: 40px 25px;
+      margin: 60px auto;
+      width: 90%;
+      max-width: 1000px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
+      text-align: center;
+      transition: background-color 0.6s ease, box-shadow 0.4s ease, transform 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section::before {
+      content: "";
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      border-radius: 25px;
+      background: linear-gradient(135deg, #E6CCFF, #ffffff, #D8BFD8);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .active-section {
+      background-color: var(--highlight);
+      box-shadow: 0 6px 20px var(--glow);
+      transform: scale(1.02);
+    }
+
+    .active-section::before {
+      opacity: 1;
+    }
+
+    /* ======== TITLE BOX ======== */
+    .title-box {
+      background-color: var(--main);
+      color: var(--white);
+      display: inline-block;
+      padding: 12px 30px;
+      border-radius: 12px;
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin-bottom: 25px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .title-box:hover {
+      transform: scale(1.05);
+    }
+
+    /* ======== ABOUT ME ======== */
+    .about-text {
+      text-align: justify;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--dark);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* ======== MEDIA GRID ======== */
+    .media-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
       text-align: center;
     }
 
-    td {
-      padding: 10px;
+    .media-item {
+      text-align: center;
+      flex: 1 1 250px;
     }
 
-    img, video {
-      border-radius: 10px;
-      border: 10px solid #4B0082;
+    img, iframe {
+      border-radius: 12px;
+      border: 4px solid var(--main);
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    img:hover, iframe:hover {
+      transform: scale(1.05);
+      box-shadow: 0px 6px 15px rgba(0,0,0,0.3);
     }
 
     .label-box {
-      background-color: #E6CCFF;
-      color: #4B0082;
-      padding: 10px;
-      border-radius: 6px;
-      width: fit-content;
-      margin: auto;
+      background-color: var(--accent);
+      color: var(--main);
+      padding: 8px 15px;
+      border-radius: 8px;
       font-weight: bold;
+      display: inline-block;
+      margin-top: 10px;
+      box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
     }
 
-    a {
-      color: #4B0082;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    a:hover {
-      text-decoration: underline;
-      color: #6a0dad;
-    }
-
+    /* ======== FOOTER ======== */
     footer {
       text-align: center;
-      margin-top: 40px;
-      background-color: #E6CCFF;
-      padding: 20px;
-      border-radius: 10px;
-      border: 2px solid #4B0082;
+      background-color: var(--accent);
+      padding: 50px 20px;
+      border-top: 3px solid var(--main);
+      border-radius: 15px 15px 0 0;
+      margin-top: 60px;
+      box-shadow: 0px -4px 12px rgba(0,0,0,0.1);
+    }
+
+    footer p {
+      color: var(--dark);
+      font-size: 14px;
     }
 
     form {
       text-align: left;
-      max-width: 400px;
-      margin: auto;
+      max-width: 450px;
+      margin: 20px auto;
+    }
+
+    label {
+      font-weight: bold;
     }
 
     input, textarea {
       width: 100%;
-      padding: 8px;
+      padding: 10px;
       margin-top: 5px;
       margin-bottom: 15px;
-      border: 1px solid #4B0082;
-      border-radius: 5px;
+      border: 1.5px solid var(--main);
+      border-radius: 8px;
+      font-size: 14px;
     }
 
     input[type="submit"], input[type="reset"] {
       width: 48%;
-      background-color: #4B0082;
+      background-color: var(--main);
       color: white;
       border: none;
       cursor: pointer;
       font-weight: bold;
+      border-radius: 8px;
+      transition: background-color 0.3s;
     }
 
     input[type="submit"]:hover, input[type="reset"]:hover {
       background-color: #6a0dad;
     }
 
-    footer p {
-      color: #2b4d70;
-      font-size: 14px;
+    /* ======== RESPONSIVE ======== */
+    @media (max-width: 768px) {
+      .nav-box {
+        display: block;
+        margin: 10px auto;
+        width: 60%;
+      }
+      .media-grid {
+        flex-direction: column;
+        align-items: center;
+      }
     }
   </style>
 </head>
 
 <body>
+
   <h1><i>Pracio Portfolio</i></h1>
+
+  <nav>
+    <a href="#about" class="nav-box">About Me</a>
+    <a href="#my projects" class="nav-box">My Projects</a>
+    <a href="#videos" class="nav-box">My Videos</a>
+    <a href="#outputs" class="nav-box">My Sample Output</a>
+    <a href="#contact" class="nav-box">Contact Me</a>
+  </nav>
+
   <hr>
 
-  <!-- My Photos Section -->
-  <div class="section">
-    <h2>My Photos</h2>
-    <table>
-      <tr>
-        <td><img src="Jogging.jpg" alt="Jogging" width="200" height="150"></td>
-        <td><img src="Roxie.jpg" alt="Birthday Picture" width="200" height="150"></td>
-        <td><img src="padudusan.jpg" alt="Padudusan" width="200" height="150"></td>
-      </tr>
-      <tr>
-        <td><div class="label-box">Jogging Time</div></td>
-        <td><div class="label-box">Birthday Picture</div></td>
-        <td><div class="label-box">Padudusan</div></td>
-      </tr>
-    </table>
+  <!-- ======== ABOUT ME ======== -->
+  <div id="about" class="section active-section">
+    <div class="title-box">👩‍💻 About Me</div>
+    <div class="about-text">
+      <p>My name is <strong>Roxan L. Pracio</strong>, a <strong>2nd-year Information Technology student</strong> with a strong passion for innovation and technology. I love exploring the world of coding, software development, and web design, where I can bring creative ideas to life through functional and user-friendly solutions. I’m also deeply interested in cybersecurity and how it plays a vital role in protecting today’s digital world.</p>
+      <p>As I continue to learn and grow in the IT field, I strive to enhance my technical skills, problem-solving abilities, and creativity. I believe that technology has the power to make life easier, smarter, and more connected—and I want to be part of that change. My goal is to become a skilled IT professional who contributes to impactful and meaningful tech projects in the future.</p>
+    </div>
   </div>
 
-  <!-- My Videos Section -->
-  <div class="section">
-    <h2>My Videos</h2>
-    <table>
-      <tr>
-        <td><video src="guitarist.mp4" width="200" height="150" controls></video></td>
-        <td><video src="keyboard.mp4" width="200" height="150" controls></video></td>
-        <td><video src="https://youtu.be/jQ1sfKIl50E?si=n9temkez5YTQcxFw" width="200" height="150" controls></video></td>
-      </tr>
-      <tr>
-        <td><div class="label-box">Guitarist</div></td>
-        <td><div class="label-box">Keyboardist</div></td>
-        <td><div class="label-box">Practice with my fellow Youth</div></td>
-      </tr>
-    </table>
+  <!-- ======== PHOTOS ======== -->
+  <div id="My Projects" class="section">
+    <div class="title-box">My Projects</div>
+    <div class="media-grid">
+      <div class="media-item">
+        <img src="Screenshot_2025-10-30-12-05-55-95_be80aec1db9a2b53c9d399db0c602181.jpg" alt="RoxAura Product">
+        <div class="label-box">RoxAura Product</div>
+      </div>
+      <div class="media-item">
+        <img src="Screenshot_2025-10-30-12-05-33-13_be80aec1db9a2b53c9d399db0c602181.jpg" alt="Lay-out T shirt">
+        <div class="label-box">Lay-out T shirt</div>
+      </div>
+      <div class="media-item">
+        <img src="Screenshot_2025-10-30-12-09-22-33_40deb401b9ffe8e1df2f1cc5ba480b12.jpg" alt="My Eccomerce">
+        <div class="label-box">My Eccomerce</div>
+      </div>
+    </div>
   </div>
 
-  <!-- Sample Output Section -->
-  <div class="section">
-    <h2>My Sample Output</h2>
-    <p style="text-align: center;">
-      <a href="https://www.canva.com/design/DAGv06yLPus/tDpnUoE5lpVHgIXAc6Ng0A/edit?utm_content=DAGv06yLPus&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" target="_blank">🎨 Canva Portfolio</a><br><br>
-      <a href="https://www.figma.com/proto/eqXsGOPhsWPbvrAJYglE0w/Untitled?node-id=3-26&t=auICUBUU6cUHDjL9-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=3%3A22&show-proto-sidebar=1" target="_blank">🖌️ Figma Portfolio</a><br><br>
-      <a href="https://www.figma.com/proto/9gDUzjiDpdbhOx8R8NIk77/Untitled?node-id=9-27&p=f&t=wVrS9qcOGyQuHUxr-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=9%3A15" target="_blank">💻 Figma E-commerce Website</a>
+  <!-- ======== VIDEOS ======== -->
+  <div id="videos" class="section">
+    <div class="title-box">🎥 My Videos</div>
+    <div class="media-grid">
+      <div class="media-item">
+        <iframe src="https://www.youtube.com/embed/61mkx_OV61s" title="Adobe Photoshop Tutorial" allowfullscreen></iframe>
+        <div class="label-box">Adobe Photoshop Tutorial</div>
+      </div>
+      <div class="media-item">
+        <iframe src="https://www.youtube.com/embed/FaNTVjATYHQ" title="E-commerce Website Tutorial" allowfullscreen></iframe>
+        <div class="label-box">E-commerce Website Tutorial</div>
+      </div>
+      <div class="media-item">
+        <iframe src="https://www.youtube.com/embed/jQ1sfKIl50E" title="Figma Tutorial" allowfullscreen></iframe>
+        <div class="label-box">Figma Tutorial</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== SAMPLE OUTPUT ======== -->
+  <div id="outputs" class="section">
+    <div class="title-box">💻 My Sample Output</div>
+    <p style="text-align: center; font-size: 1.1rem;">
+      <a href="https://www.canva.com/design/DAGv06yLPus/tDpnUoE5lpVHgIXAc6Ng0A/edit" target="_blank">🎨 Canva Portfolio</a><br><br>
+      <a href="https://www.figma.com/proto/eqXsGOPhsWPbvrAJYglE0w/Untitled?node-id=3-26" target="_blank">🖌️ Figma Portfolio</a><br><br>
+      <a href="https://www.figma.com/proto/9gDUzjiDpdbhOx8R8NIk77/Untitled?node-id=9-27" target="_blank">🛒 Figma E-Commerce Website</a>
     </p>
   </div>
 
-  <!-- Contact Section -->
-  <footer>
-    <h2>Contact Me</h2>
+  <!-- ======== CONTACT ======== -->
+  <footer id="contact" class="section">
+    <div class="title-box">📧 Contact Me</div>
     <form action="mailto:your-email@example.com" method="post" enctype="text/plain">
       <label>Full Name</label>
       <input type="text" name="name" required>
-
       <label>Email</label>
       <input type="email" name="email" required>
-
       <label>Message</label>
       <textarea name="message" rows="5" required></textarea>
-
       <div style="display: flex; justify-content: space-between;">
         <input type="submit" value="Send">
         <input type="reset" value="Clear">
@@ -180,5 +345,24 @@
     <hr>
     <p>© 2025 Pracio Portfolio | All Rights Reserved</p>
   </footer>
+
+  <script>
+    // ======== NAV + SECTION COLOR BOX EFFECT ========
+    const sections = document.querySelectorAll('.section');
+    const navBoxes = document.querySelectorAll('.nav-box');
+
+    navBoxes.forEach(link => {
+      link.addEventListener('click', () => {
+        // Remove active from all
+        navBoxes.forEach(a => a.classList.remove('active'));
+        sections.forEach(sec => sec.classList.remove('active-section'));
+
+        // Activate clicked link + target section
+        link.classList.add('active');
+        const target = document.querySelector(link.getAttribute('href'));
+        target.classList.add('active-section');
+      });
+    });
+  </script>
 </body>
 </html>
